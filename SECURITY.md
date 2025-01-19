@@ -17,14 +17,14 @@ response.headers["Content-Security-Policy"] = (
     "form-action 'self'; "
     "base-uri 'self';"
 )
-
+```
 #### 2. Rate Limiting
 The application uses rate limiting to prevent abuse and denial-of-service attacks. The rate limiting is implemented using the Limiter class from the limits library:
 
 ```python
 limiter = Limiter(key_func=get_remote_address)
 app.state.limiter = limiter
-
+```
 #### 3. Logging
 The application uses logging to record important events and errors. Logging is configured to write logs to both a file and the console:
 
@@ -38,7 +38,7 @@ logging.basicConfig(
     ],
 )
 logger = logging.getLogger("fastapi-app")
-
+```
 
 #### 4. Request Logging Middleware
 The application includes middleware to log incoming HTTP requests. This helps in monitoring and detecting any suspicious activities:
@@ -58,7 +58,7 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
-
+```
 
 ### From auth.py
 
@@ -72,7 +72,7 @@ def verify_password(plain_password, hashed_password):
     return pwd_context.verify(plain_password, hashed_password)
 def get_password_hash(password):
     return pwd_context.hash(password)
-
+```
 ####2. JWT Authentication
 The application uses JSON Web Tokens (JWT) for secure authentication. This ensures that user sessions are securely managed
 ```python
@@ -89,7 +89,7 @@ def create_access_token(data: dict, expires_delta: timedelta = None):
     to_encode.update({"exp": expire})
     encoded_jwt = jwt.encode(to_encode, SECRET_KEY, algorithm=ALGORITHM)
     return encoded_jwt
-
+```
 
 
 Reporting a Vulnerability
