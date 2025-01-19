@@ -59,6 +59,8 @@ app.add_middleware(
     allow_headers=["*"],
 )
 ```
+5. API Documentation
+The application uses Swagger to document the API. This is automatically provided by FastAPI and can be accessed at /docs.
 
 ### From auth.py
 
