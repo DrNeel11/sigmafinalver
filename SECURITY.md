@@ -109,6 +109,26 @@ async def create_user(user: User):
     new_user = collection.find_one({"_id": result.inserted_id})
     return one_user(new_user)
 ```
+### From users.py
+
+1. Input Validation
+The application uses Pydantic's Field to enforce constraints on user input, such as minimum and maximum lengths for strings. This helps in preventing invalid data from being processed:
+```python
+from pydantic import BaseModel, Field
+from typing import Optional
+
+class User(BaseModel):
+    username: str = Field(..., min_length=3, max_length=50)
+    email: str
+    password: str = Field(..., min_length=6)
+    disabled: Optional[bool] = None
+```
+2. Separation of Concerns
+The application separates the user model used for input (User) from the model used for storing in the database (UserInDB). This helps in ensuring that sensitive information like hashed passwords are not exposed unnecessarily:
+```python
+class UserInDB(User):
+    hashed_password: str
+```
 
 Reporting a Vulnerability
 If you discover any security vulnerabilities, please report them to the project maintainers immediately. We take security issues seriously and will address them promptly.
