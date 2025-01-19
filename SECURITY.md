@@ -21,12 +21,14 @@ response.headers["Content-Security-Policy"] = (
 #### 2. Rate Limiting
 The application uses rate limiting to prevent abuse and denial-of-service attacks. The rate limiting is implemented using the Limiter class from the limits library:
 
+```python
 limiter = Limiter(key_func=get_remote_address)
 app.state.limiter = limiter
 
 #### 3. Logging
 The application uses logging to record important events and errors. Logging is configured to write logs to both a file and the console:
 
+```python
 logging.basicConfig(
     level=logging.INFO,
     format="%(asctime)s - %(name)s - %(levelname)s - %(message)s",
@@ -41,15 +43,14 @@ logger = logging.getLogger("fastapi-app")
 #### 4. Request Logging Middleware
 The application includes middleware to log incoming HTTP requests. This helps in monitoring and detecting any suspicious activities:
 
+```python
 @app.middleware("http")
 async def log_requests(request: Request, call_next):
     logger.info(f"Incoming request: {request.method} {request.url}")
     response = await call_next(request)
     logger.info(f"Response status: {response.status_code}")
     return response
-
 app.add_middleware(SlowAPIMiddleware)
-
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],  
@@ -64,25 +65,21 @@ app.add_middleware(
 ####1. Password Hashing
 The application uses secure password hashing to store user passwords. This is implemented using the bcrypt library:
 
+```python
 from passlib.context import CryptContext
-
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
-
 def verify_password(plain_password, hashed_password):
     return pwd_context.verify(plain_password, hashed_password)
-
 def get_password_hash(password):
     return pwd_context.hash(password)
 
 ####2. JWT Authentication
 The application uses JSON Web Tokens (JWT) for secure authentication. This ensures that user sessions are securely managed
-
+```python
 from jose import JWTError, jwt
-
 SECRET_KEY = "your_secret_key"
 ALGORITHM = "HS256"
 ACCESS_TOKEN_EXPIRE_MINUTES = 30
-
 def create_access_token(data: dict, expires_delta: timedelta = None):
     to_encode = data.copy()
     if expires_delta:
