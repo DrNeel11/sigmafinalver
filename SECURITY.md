@@ -142,6 +142,41 @@ The application separates the user model used for input (User) from the model us
 class UserInDB(User):
     hashed_password: str
 ```
+
+### From Dockerfile 
+
+1. HTTPS Configuration for FastAPI with Docker:
+To ensure secure communication via HTTPS, the FastAPI application is configured to run with SSL certificates within a Docker container.
+
+Dockerfile Configuration
+This Dockerfile sets up the FastAPI app with the necessary SSL certificates for HTTPS. Below is the breakdown of the steps:
+
+```Dockerfile
+# filepath: /c:/Users/Neelesh/sigmafinalver/Dockerfile
+FROM python:3.9-slim
+
+WORKDIR /app
+
+COPY . /app
+
+RUN pip install --no-cache-dir -r requirements.txt
+
+CMD ["uvicorn", "app:app", "--host", "0.0.0.0", "--port", "8000", "--reload", "--ssl-keyfile", "/app/certs/localhost.key", "--ssl-certfile", "/app/certs/localhost.crt"]
+```
+Explanation:
+    Base Image: The image python:3.9-slim is used for a lightweight Python environment.
+    Working Directory: The app's code is copied to /app in the container.
+    Dependencies: The Python dependencies are installed using pip from the requirements.txt file.
+    HTTPS Setup:
+    The uvicorn server is started with the --ssl-keyfile and --ssl-certfile options, pointing to the SSL certificate and key file within the /app/certs directory.
+    The app listens on 0.0.0.0 to accept external traffic and on port 8000 to serve the API securely over HTTPS.
+    Make sure to replace the paths to the SSL certificate and key files with the appropriate ones you have for your project.
+
+Requirements
+    Ensure the following files are available in the /app/certs directory inside your container:
+        localhost.crt (SSL Certificate)
+        localhost.key (SSL Private Key)
+
 Reporting a Vulnerability
 If you discover any security vulnerabilities, please report them to the project maintainers immediately. We take security issues seriously and will address them promptly.
 
