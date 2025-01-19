@@ -90,7 +90,25 @@ def create_access_token(data: dict, expires_delta: timedelta = None):
     encoded_jwt = jwt.encode(to_encode, SECRET_KEY, algorithm=ALGORITHM)
     return encoded_jwt
 ```
+### From routes.py
 
+1. Input Sanitization
+The application sanitizes user input to prevent injection attacks. This is done using the bleach library:
+```python
+import bleach
+
+@router.post("/")
+async def create_user(user: User):
+    sanitized_username = bleach.clean(user.username)
+    sanitized_email = bleach.clean(user.email)
+    user.password = hash_password(user.password)
+    user_dict = dict(user)
+    user_dict["username"] = sanitized_username
+    user_dict["email"] = sanitized_email
+    result = collection.insert_one(user_dict)
+    new_user = collection.find_one({"_id": result.inserted_id})
+    return one_user(new_user)
+```
 
 Reporting a Vulnerability
 If you discover any security vulnerabilities, please report them to the project maintainers immediately. We take security issues seriously and will address them promptly.
