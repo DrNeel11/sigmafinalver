@@ -28,25 +28,27 @@ This project is a FastAPI application running in a Docker container.
     ```
 
 ## Running the Application
-1. **Trust the Self-Signed Certificate**
-To avoid the ERR_CERT_AUTHORITY_INVALID error, you need to trust the self-signed certificate on your local machine.
 
-On Windows:
-    Open the localhost.crt file.
-    Click on "Install Certificate".
-    Choose "Local Machine" and click "Next".
-    Select "Place all certificates in the following store" and browse to "Trusted Root Certification Authorities".
-    Click "Next" and then "Finish".
-On macOS:
-    Open the localhost.crt file.
-    Add it to the keychain.
-    Open Keychain Access, find the certificate, and set it to "Always Trust".
-On Linux:
-    Copy the localhost.crt file to /usr/local/share/ca-certificates/.
-    Run sudo update-ca-certificates.
-
-2. **Access the application:**
+1. **Access the application:**
     Open your web browser and go to `https://localhost:8001`.
+2. **Trust the Self-Signed Certificate**:
+    To avoid the `ERR_CERT_AUTHORITY_INVALID` error, you need to trust the self-signed certificate on your local machine.
+
+    ### On Windows:
+    1. Open the `localhost.crt` file.
+    2. Click on "Install Certificate".
+    3. Choose "Local Machine" and click "Next".
+    4. Select "Place all certificates in the following store" and browse to "Trusted Root Certification Authorities".
+    5. Click "Next" and then "Finish".
+
+    ### On macOS:
+    1. Open the `localhost.crt` file.
+    2. Add it to the keychain.
+    3. Open Keychain Access, find the certificate, and set it to "Always Trust".
+
+    ### On Linux:
+    1. Copy the `localhost.crt` file to `/usr/local/share/ca-certificates/`.
+    2. Run `sudo update-ca-certificates`.
    
 
 ## Additional Information
