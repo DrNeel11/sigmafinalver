@@ -23,7 +23,7 @@ limiter = Limiter(key_func=get_remote_address)
 
 @router.get("/favicon.ico", include_in_schema=False)
 async def favicon():
-    return FileResponse("path/to/your/favicon.ico")
+    return FileResponse("static/favicon.ico")
 
 @router.get("/")
 async def get_users():

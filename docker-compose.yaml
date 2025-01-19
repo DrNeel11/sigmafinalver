@@ -1,19 +1,25 @@
 
 services:
-  flask-app:
+  app:
     build: .
+    container_name: fastapi_app
     ports:
-      - "8001:8000"  # Changed host port to 8001
+      - "8001:8000"
+    volumes:
+      - ./certs:/app/certs
     environment:
-      - FLASK_ENV=development
-      - MONGO_URI=mongodb+srv://neel11:Neelpavi1234@cluster0.yxm11.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0
+      - UVICORN_HOST=0.0.0.0
+      - UVICORN_PORT=8000
     depends_on:
       - mongo
+
   mongo:
     image: mongo:latest
+    container_name: mongo_db
     ports:
-      - "27018:27017"  # Changed host port to 27018
+      - "27018:27017"
     volumes:
       - mongo-data:/data/db
+
 volumes:
   mongo-data:

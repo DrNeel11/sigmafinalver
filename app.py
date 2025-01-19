@@ -10,6 +10,7 @@ from fastapi.middleware.trustedhost import TrustedHostMiddleware
 from fastapi.middleware.cors import CORSMiddleware
 import logging
 from pydantic import BaseModel
+from fastapi.staticfiles import StaticFiles
 
 app = FastAPI()
 
@@ -60,6 +61,6 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
-
+app.mount("/static", StaticFiles(directory="static"), name="static")
 app.include_router(router)
 
