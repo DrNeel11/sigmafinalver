@@ -1,0 +1,16 @@
+fastapi
+slowapi
+pydantic
+uvicorn
+pymongo==3.11.0
+pymongo[srv]
+python-jose[cryptography]
+pyjwt
+passlib[bcrypt]
+bcrypt==4.0.1
+python-multipart
+prometheus-fastapi-instrumentator
+bleach
+pytest 
+httpx 
+pytest-asyncio
