@@ -30,7 +30,7 @@ This project is a FastAPI application running in a Docker container.
 ## Running the Application
 
 1. **Access the application:**
-    Open your web browser and go to `http://localhost:8001/docs`.
+    Open your web browser and go to `https://localhost:8001`.
 
 ## Additional Information
 
