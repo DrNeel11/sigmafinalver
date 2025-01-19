@@ -62,7 +62,7 @@ app.add_middleware(
 
 ### From auth.py
 
-####1. Password Hashing
+1. Password Hashing
 The application uses secure password hashing to store user passwords. This is implemented using the bcrypt library:
 
 ```python
@@ -73,7 +73,7 @@ def verify_password(plain_password, hashed_password):
 def get_password_hash(password):
     return pwd_context.hash(password)
 ```
-####2. JWT Authentication
+2. JWT Authentication
 The application uses JSON Web Tokens (JWT) for secure authentication. This ensures that user sessions are securely managed
 ```python
 from jose import JWTError, jwt
