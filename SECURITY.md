@@ -109,6 +109,17 @@ async def create_user(user: User):
     new_user = collection.find_one({"_id": result.inserted_id})
     return one_user(new_user)
 ```
+2. Generic Error Messages
+The application returns generic error messages to avoid exposing sensitive information:
+```python
+if not user:
+    raise HTTPException(
+        status_code=status.HTTP_401_UNAUTHORIZED,
+        detail="Incorrect username or password",
+        headers={"WWW-Authenticate": "Bearer"},
+    )
+```
+
 ### From users.py
 
 1. Input Validation
@@ -129,7 +140,6 @@ The application separates the user model used for input (User) from the model us
 class UserInDB(User):
     hashed_password: str
 ```
-
 Reporting a Vulnerability
 If you discover any security vulnerabilities, please report them to the project maintainers immediately. We take security issues seriously and will address them promptly.
 
