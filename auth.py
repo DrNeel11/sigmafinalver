@@ -1,4 +1,5 @@
 from passlib.context import CryptContext
+import os
 from datetime import datetime, timedelta
 from jose import JWTError, jwt
 from fastapi.security import OAuth2PasswordBearer
@@ -13,7 +14,16 @@ class TokenData(BaseModel):
     
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="token")
-SECRET_KEY = "83daa0256a2289b0fb23693bf1f6034d44396675749244721a2b20e896e11662"
+
+# OWASP A05:2021 - Security Misconfiguration
+# Secret keys should not be hardcoded. Loading from environment variables is a security best practice.
+# In your shell, before running the app, set the variable: export SECRET_KEY='your-super-secret-and-long-random-string'
+SECRET_KEY = os.getenv("SECRET_KEY")
+
+# Per RAG guidance on 'Implement proper error handling', we fail fast if critical configuration is missing.
+if not SECRET_KEY:
+    raise ValueError("SECRET_KEY environment variable not set. Application cannot start securely.")
+
 ALGORITHM = "HS256"
 ACCESS_TOKEN_EXPIRE_MINUTES = 30
 
